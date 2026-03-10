@@ -192,6 +192,9 @@ export class UpgradesScene extends Phaser.Scene {
 
     setTextSnapshot({
       mode: 'upgrades',
+      trackId: null,
+      phase: null,
+      countdownLights: 0,
       money: profile.money,
       result: gameStore.latestRaceResult(),
     });

@@ -137,6 +137,9 @@ export class RewardsScene extends Phaser.Scene {
 
     setTextSnapshot({
       mode: 'rewards',
+      trackId: null,
+      phase: null,
+      countdownLights: 0,
       money: gameStore.profile().money,
       result: gameStore.latestRaceResult(),
     });

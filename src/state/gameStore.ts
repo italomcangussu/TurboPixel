@@ -6,7 +6,7 @@ import { COSMETIC_MAP, COSMETICS } from '../data/cosmetics';
 import { LEAGUES, RACES_PER_LEAGUE } from '../data/leagues';
 import { TRACKS } from '../data/tracks';
 import { applyRaceEconomy } from '../core/economy';
-import { RUNTIME_DEVICE_ID, RUNTIME_PLAYER_ID } from '../core/constants';
+import { RUNTIME_DEVICE_ID, RUNTIME_PLAYER_ID, STORAGE_BACKUP_KEY, STORAGE_KEY } from '../core/constants';
 import { openLootBox } from '../core/loot';
 import { SeededRng } from '../core/random';
 import { loadProfile, saveProfile } from '../core/save';
@@ -266,7 +266,7 @@ class GameStore {
 
   createRaceConfig(league: number, raceNumber: number): RaceConfig {
     const track = TRACKS[(raceNumber - 1) % TRACKS.length];
-    const racePool = CARS.filter((car) => car.unlockLeague <= league + 1);
+    const racePool = CARS.filter((car) => car.unlockLeague <= league);
     const aiCar = racePool[(raceNumber + league * 3) % racePool.length];
     return {
       league,
@@ -347,8 +347,8 @@ class GameStore {
   }
 
   resetProfile(): void {
-    localStorage.removeItem('turbopixel_save_v1');
-    localStorage.removeItem('turbopixel_save_backup_v1');
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_BACKUP_KEY);
     const loaded = loadProfile();
     this.profileData = loaded.profile;
     this.pendingRaceConfig = null;

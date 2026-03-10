@@ -35,14 +35,19 @@ export class BootScene extends Phaser.Scene {
 
     setTextSnapshot({
       mode: 'boot',
+      trackId: null,
+      phase: null,
+      countdownLights: 0,
       league: null,
       raceNumber: null,
       money: gameStore.profile().money,
       result: null,
     });
 
-    this.time.delayedCall(120, () => {
-      this.scene.start('MenuScene');
+    void document.fonts.ready.finally(() => {
+      this.time.delayedCall(120, () => {
+        this.scene.start('MenuScene');
+      });
     });
   }
 }

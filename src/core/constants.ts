@@ -1,9 +1,9 @@
 import type { CosmeticRarity, UpgradeType } from '../types';
 
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;
 
-export const STORAGE_KEY = 'turbopixel_save_v1';
-export const STORAGE_BACKUP_KEY = 'turbopixel_save_backup_v1';
+export const STORAGE_KEY = 'turbopixel_save_v3';
+export const STORAGE_BACKUP_KEY = 'turbopixel_save_backup_v3';
 export const ENABLE_REMOTE_BACKEND_SYNC = import.meta.env.VITE_ENABLE_REMOTE_BACKEND_SYNC === 'true';
 export const BACKEND_PROVIDER = import.meta.env.VITE_BACKEND_PROVIDER === 'supabase' ? 'supabase' : 'local';
 export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? '';
@@ -14,7 +14,7 @@ export const LOCAL_DEVICE_ID = 'web-default-device';
 export const RUNTIME_PLAYER_ID = import.meta.env.VITE_PLAYER_ID ?? LOCAL_PLAYER_ID;
 export const RUNTIME_DEVICE_ID = import.meta.env.VITE_DEVICE_ID ?? LOCAL_DEVICE_ID;
 
-export const RACE_DISTANCE_METERS = 400;
+export const RACE_DISTANCE_METERS = 402.336;
 export const GREEN_LIGHT_AT_MS = 3000;
 export const PERFECT_WINDOW_MS = 120;
 export const GOOD_WINDOW_MS = 300;

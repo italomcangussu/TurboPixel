@@ -141,6 +141,9 @@ export class MenuScene extends Phaser.Scene {
 
     setTextSnapshot({
       mode: 'menu',
+      trackId: null,
+      phase: null,
+      countdownLights: 0,
       money: profile.money,
       league: null,
       raceNumber: null,

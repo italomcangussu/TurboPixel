@@ -3,6 +3,9 @@ import type { RaceTextState } from '../types';
 let snapshot: RaceTextState = {
   coordinateSystem: 'origin top-left; x increases right; y increases downward; distance in meters from start line',
   mode: 'boot',
+  trackId: null,
+  phase: null,
+  countdownLights: 0,
   league: null,
   raceNumber: null,
   player: {

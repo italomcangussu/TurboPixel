@@ -139,6 +139,9 @@ export class LeagueScene extends Phaser.Scene {
 
     setTextSnapshot({
       mode: 'league',
+      trackId: null,
+      phase: null,
+      countdownLights: 0,
       league: this.selectedLeague,
       raceNumber: this.selectedRace,
       money: gameStore.profile().money,

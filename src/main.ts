@@ -16,6 +16,7 @@ declare global {
   interface Window {
     render_game_to_text: () => string;
     advanceTime: (ms: number) => void;
+    __turbopixel_game?: Phaser.Game;
   }
 }
 
@@ -113,5 +114,6 @@ window.addEventListener('keydown', async (event) => {
 
 window.render_game_to_text = () => JSON.stringify(getTextSnapshot());
 window.advanceTime = (ms: number) => advanceTime(ms);
+window.__turbopixel_game = game;
 
 void game;

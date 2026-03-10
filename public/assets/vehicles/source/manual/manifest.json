@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "frame": { "width": 192, "height": 96, "columns": 6 },
+  "cars": [
+    {
+      "spriteKey": "supra_a80",
+      "sourcePng": "public/assets/vehicles/source/manual/png/supra_a80.png",
+      "align": { "scale": 1.0, "offsetX": 0, "offsetY": 0 },
+      "bounds": { "minX": 12, "maxX": 176, "minY": 24, "maxY": 78 },
+      "orientation": { "noseX": 168, "tailX": 24 },
+      "raceFx": { "smoke": 1.0, "trail": 1.0, "wheelBlur": 1.0, "rearGlow": 1.0 }
+    },
+    {
+      "spriteKey": "rx7_fd",
+      "sourcePng": "public/assets/vehicles/source/manual/png/rx7_fd.png",
+      "align": { "scale": 1.0, "offsetX": 0, "offsetY": 0 },
+      "bounds": { "minX": 12, "maxX": 176, "minY": 24, "maxY": 78 },
+      "orientation": { "noseX": 168, "tailX": 24 },
+      "raceFx": { "smoke": 1.0, "trail": 1.0, "wheelBlur": 1.0, "rearGlow": 1.0 }
+    },
+    {
+      "spriteKey": "nsx_na1",
+      "sourcePng": "public/assets/vehicles/source/manual/png/nsx_na1.png",
+      "align": { "scale": 1.0, "offsetX": 0, "offsetY": 0 },
+      "bounds": { "minX": 12, "maxX": 176, "minY": 24, "maxY": 78 },
+      "orientation": { "noseX": 168, "tailX": 24 },
+      "raceFx": { "smoke": 1.0, "trail": 1.0, "wheelBlur": 1.0, "rearGlow": 1.0 }
+    },
+    {
+      "spriteKey": "skyline_r34",
+      "sourcePng": "public/assets/vehicles/source/manual/png/skyline_r34.png",
+      "align": { "scale": 1.0, "offsetX": 0, "offsetY": 0 },
+      "bounds": { "minX": 12, "maxX": 176, "minY": 24, "maxY": 78 },
+      "orientation": { "noseX": 168, "tailX": 24 },
+      "raceFx": { "smoke": 1.0, "trail": 1.0, "wheelBlur": 1.0, "rearGlow": 1.0 }
+    },
+    {
+      "spriteKey": "challenger_hellcat",
+      "sourcePng": "public/assets/vehicles/source/manual/png/challenger_hellcat.png",
+      "align": { "scale": 1.0, "offsetX": 0, "offsetY": 0 },
+      "bounds": { "minX": 12, "maxX": 176, "minY": 24, "maxY": 78 },
+      "orientation": { "noseX": 168, "tailX": 24 },
+      "raceFx": { "smoke": 1.0, "trail": 1.0, "wheelBlur": 1.0, "rearGlow": 1.0 }
+    },
+    {
+      "spriteKey": "corvette_zr1_c7",
+      "sourcePng": "public/assets/vehicles/source/manual/png/corvette_zr1_c7.png",
+      "align": { "scale": 1.0, "offsetX": 0, "offsetY": 0 },
+      "bounds": { "minX": 12, "maxX": 176, "minY": 24, "maxY": 78 },
+      "orientation": { "noseX": 168, "tailX": 24 },
+      "raceFx": { "smoke": 1.0, "trail": 1.0, "wheelBlur": 1.0, "rearGlow": 1.0 }
+    },
+    {
+      "spriteKey": "shelby_gt500",
+      "sourcePng": "public/assets/vehicles/source/manual/png/shelby_gt500.png",
+      "align": { "scale": 1.0, "offsetX": 0, "offsetY": 0 },
+      "bounds": { "minX": 12, "maxX": 176, "minY": 24, "maxY": 78 },
+      "orientation": { "noseX": 168, "tailX": 24 },
+      "raceFx": { "smoke": 1.0, "trail": 1.0, "wheelBlur": 1.0, "rearGlow": 1.0 }
+    },
+    {
+      "spriteKey": "porsche_911_gt3",
+      "sourcePng": "public/assets/vehicles/source/manual/png/porsche_911_gt3.png",
+      "align": { "scale": 1.0, "offsetX": 0, "offsetY": 0 },
+      "bounds": { "minX": 12, "maxX": 176, "minY": 24, "maxY": 78 },
+      "orientation": { "noseX": 168, "tailX": 24 },
+      "raceFx": { "smoke": 1.0, "trail": 1.0, "wheelBlur": 1.0, "rearGlow": 1.0 }
+    },
+    {
+      "spriteKey": "gtr_r35_nismo",
+      "sourcePng": "public/assets/vehicles/source/manual/png/gtr_r35_nismo.png",
+      "align": { "scale": 1.0, "offsetX": 0, "offsetY": 0 },
+      "bounds": { "minX": 12, "maxX": 176, "minY": 24, "maxY": 78 },
+      "orientation": { "noseX": 168, "tailX": 24 },
+      "raceFx": { "smoke": 1.0, "trail": 1.0, "wheelBlur": 1.0, "rearGlow": 1.0 }
+    },
+    {
+      "spriteKey": "f8_tributo",
+      "sourcePng": "public/assets/vehicles/source/manual/png/f8_tributo.png",
+      "align": { "scale": 1.0, "offsetX": 0, "offsetY": 0 },
+      "bounds": { "minX": 12, "maxX": 176, "minY": 24, "maxY": 78 },
+      "orientation": { "noseX": 168, "tailX": 24 },
+      "raceFx": { "smoke": 1.0, "trail": 1.0, "wheelBlur": 1.0, "rearGlow": 1.0 }
+    },
+    {
+      "spriteKey": "mclaren_720s",
+      "sourcePng": "public/assets/vehicles/source/manual/png/mclaren_720s.png",
+      "align": { "scale": 1.0, "offsetX": 0, "offsetY": 0 },
+      "bounds": { "minX": 12, "maxX": 176, "minY": 24, "maxY": 78 },
+      "orientation": { "noseX": 168, "tailX": 24 },
+      "raceFx": { "smoke": 1.0, "trail": 1.0, "wheelBlur": 1.0, "rearGlow": 1.0 }
+    },
+    {
+      "spriteKey": "aventador_svj",
+      "sourcePng": "public/assets/vehicles/source/manual/png/aventador_svj.png",
+      "align": { "scale": 1.0, "offsetX": 0, "offsetY": 0 },
+      "bounds": { "minX": 12, "maxX": 176, "minY": 24, "maxY": 78 },
+      "orientation": { "noseX": 168, "tailX": 24 },
+      "raceFx": { "smoke": 1.0, "trail": 1.0, "wheelBlur": 1.0, "rearGlow": 1.0 }
+    }
+  ]
+}

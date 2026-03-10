@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Teko:wght@500;600;700&display=swap');
+
 :root {
-  --bg-0: #07090f;
-  --bg-1: #121828;
-  --line: #4e7fb8;
-  --text: #eef4ff;
+  --shell-bg: #090c12;
+  --shell-mid: #131924;
+  --shell-line: #4f6a89;
+  --shell-text: #eef4ff;
+  --shell-accent: #49cfff;
 }
 
 * {
@@ -17,11 +20,11 @@ body {
   padding: 0;
   overflow: hidden;
   background:
-    radial-gradient(circle at 25% 20%, #26365a 0%, transparent 46%),
-    radial-gradient(circle at 85% 10%, #3b2247 0%, transparent 42%),
-    linear-gradient(160deg, var(--bg-1), var(--bg-0));
-  color: var(--text);
-  font-family: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace;
+    radial-gradient(circle at 18% 20%, rgba(73, 207, 255, 0.16), transparent 32%),
+    radial-gradient(circle at 80% 8%, rgba(255, 120, 73, 0.14), transparent 24%),
+    linear-gradient(180deg, #121723 0%, var(--shell-bg) 100%);
+  color: var(--shell-text);
+  font-family: 'Rajdhani', sans-serif;
 }
 
 #app {
@@ -42,13 +45,16 @@ body {
   height: min(100vh, calc(100vw * (9 / 16)));
   max-width: 100vw;
   max-height: 100vh;
-  border: 1px solid color-mix(in srgb, var(--line) 45%, transparent);
-  box-shadow:
-    0 20px 60px rgba(8, 14, 29, 0.55),
-    inset 0 0 0 1px rgba(162, 199, 255, 0.08);
-  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--shell-line) 52%, transparent);
+  border-radius: 16px;
   overflow: hidden;
-  background: #0e1220;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 12%),
+    linear-gradient(180deg, #0b1017, var(--shell-mid));
+  box-shadow:
+    0 28px 80px rgba(3, 7, 14, 0.7),
+    inset 0 0 0 1px rgba(170, 210, 255, 0.08),
+    inset 0 22px 42px rgba(255, 255, 255, 0.02);
 }
 
 canvas {
@@ -73,10 +79,13 @@ body {
   z-index: 10;
   text-align: center;
   padding: 24px;
-  font-size: 20px;
-  color: #fff1dd;
-  backdrop-filter: blur(4px);
-  background: rgba(7, 7, 11, 0.86);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #fff3dd;
+  backdrop-filter: blur(8px);
+  background: rgba(8, 10, 14, 0.88);
 }
 
 @media (max-width: 900px) {
@@ -85,5 +94,6 @@ body {
     height: calc(100vw * 9 / 16);
     border-radius: 0;
     border: none;
+    box-shadow: none;
   }
 }

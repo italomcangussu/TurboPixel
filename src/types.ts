@@ -1,4 +1,4 @@
-export type CarEra = 'esportivo' | 'retro' | 'truck' | '90s' | '00s' | '80s' | '70s' | '60s' | '10s' | 'classic' | 'modern';
+export type CarEra = '90s' | '00s' | '10s';
 export type CosmeticCategory = 'spoiler' | 'rodas' | 'bodykit' | 'pintura';
 export type CosmeticRarity = 'comum' | 'rara' | 'epica' | 'lendaria';
 export type UpgradeType = 'motor' | 'cambio' | 'turbo' | 'peso' | 'tracao' | 'aerodinamica' | 'embreagem' | 'ecu';
@@ -6,8 +6,12 @@ export type UpgradeType = 'motor' | 'cambio' | 'turbo' | 'peso' | 'tracao' | 'ae
 export interface CarSpec {
   id: string;
   name: string;
+  manufacturer: string;
+  model: string;
+  yearLabel: string;
+  garageTag: string;
   era: CarEra;
-  archetype: 'sport' | 'retro' | 'truck' | 'jdm' | 'retro_compact' | 'dragster';
+  archetype: 'sport';
   tier: number;
   baseTorque: number;
   redlineRpm: number;
@@ -15,6 +19,9 @@ export interface CarSpec {
   price: number;
   unlockLeague: number;
   color: number;
+  accentColor: number;
+  headlightTint: number;
+  taillightTint: number;
   spriteKey: string;
   weightKg: number;
   dragCoef: number;
@@ -92,9 +99,16 @@ export interface LootBoxResult {
 export interface TrackSpec {
   id: string;
   name: string;
-  horizonColor: number;
-  roadColor: number;
-  accentColor: number;
+  skyTopColor: number;
+  skyBottomColor: number;
+  asphaltColor: number;
+  rubberColor: number;
+  laneStripeColor: number;
+  barrierPrimary: number;
+  barrierAccent: number;
+  lightAccent: number;
+  environment: 'forest' | 'industrial' | 'airfield';
+  timeOfDay: 'day' | 'sunset' | 'dusk';
 }
 
 export interface LeagueSpec {
@@ -108,6 +122,9 @@ export interface LeagueSpec {
 export interface RaceTextState {
   coordinateSystem: string;
   mode: string;
+  trackId: string | null;
+  phase: 'countdown' | 'racing' | 'finished' | null;
+  countdownLights: number;
   league: number | null;
   raceNumber: number | null;
   player: {

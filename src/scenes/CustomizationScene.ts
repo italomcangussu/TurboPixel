@@ -132,6 +132,9 @@ export class CustomizationScene extends Phaser.Scene {
 
     setTextSnapshot({
       mode: 'customization',
+      trackId: null,
+      phase: null,
+      countdownLights: 0,
       money: profile.money,
       result: gameStore.latestRaceResult(),
     });

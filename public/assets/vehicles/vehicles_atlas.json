@@ -1,654 +1,484 @@
 {
   "frames": {
-    "veh_bolt-sprint_idle": {
+    "veh_supra_a80_idle": {
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       }
     },
-    "veh_bolt-sprint_race": {
-      "frame": {
-        "x": 96,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_neon-comet_idle": {
+    "veh_supra_a80_race": {
       "frame": {
         "x": 192,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       }
     },
-    "veh_neon-comet_race": {
-      "frame": {
-        "x": 288,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_sunset-cruiser_idle": {
+    "veh_rx7_fd_idle": {
       "frame": {
         "x": 384,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       }
     },
-    "veh_sunset-cruiser_race": {
-      "frame": {
-        "x": 480,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_apex-razor_idle": {
+    "veh_rx7_fd_race": {
       "frame": {
         "x": 576,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       }
     },
-    "veh_apex-razor_race": {
+    "veh_nsx_na1_idle": {
       "frame": {
-        "x": 672,
+        "x": 768,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       }
     },
-    "veh_viper-lane_idle": {
+    "veh_nsx_na1_race": {
       "frame": {
-        "x": 0,
-        "y": 48,
-        "w": 96,
-        "h": 48
+        "x": 960,
+        "y": 0,
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       }
     },
-    "veh_viper-lane_race": {
-      "frame": {
-        "x": 96,
-        "y": 48,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_chrome-drifter_idle": {
-      "frame": {
-        "x": 192,
-        "y": 48,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_chrome-drifter_race": {
-      "frame": {
-        "x": 288,
-        "y": 48,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_iron-hauler_idle": {
-      "frame": {
-        "x": 384,
-        "y": 48,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_iron-hauler_race": {
-      "frame": {
-        "x": 480,
-        "y": 48,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_nova-burst_idle": {
-      "frame": {
-        "x": 576,
-        "y": 48,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_nova-burst_race": {
-      "frame": {
-        "x": 672,
-        "y": 48,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_route-66_idle": {
+    "veh_skyline_r34_idle": {
       "frame": {
         "x": 0,
         "y": 96,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       }
     },
-    "veh_route-66_race": {
-      "frame": {
-        "x": 96,
-        "y": 96,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_diesel-thunder_idle": {
+    "veh_skyline_r34_race": {
       "frame": {
         "x": 192,
         "y": 96,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       }
     },
-    "veh_diesel-thunder_race": {
-      "frame": {
-        "x": 288,
-        "y": 96,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_pulse-gtx_idle": {
+    "veh_challenger_hellcat_idle": {
       "frame": {
         "x": 384,
         "y": 96,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       }
     },
-    "veh_pulse-gtx_race": {
-      "frame": {
-        "x": 480,
-        "y": 96,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_midnight-heritage_idle": {
+    "veh_challenger_hellcat_race": {
       "frame": {
         "x": 576,
         "y": 96,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       }
     },
-    "veh_midnight-heritage_race": {
+    "veh_corvette_zr1_c7_idle": {
       "frame": {
-        "x": 672,
+        "x": 768,
         "y": 96,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       }
     },
-    "veh_cargo-brawler_idle": {
+    "veh_corvette_zr1_c7_race": {
+      "frame": {
+        "x": 960,
+        "y": 96,
+        "w": 192,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 96
+      }
+    },
+    "veh_shelby_gt500_idle": {
       "frame": {
         "x": 0,
-        "y": 144,
-        "w": 96,
-        "h": 48
+        "y": 192,
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       }
     },
-    "veh_cargo-brawler_race": {
-      "frame": {
-        "x": 96,
-        "y": 144,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_titan-rig_idle": {
+    "veh_shelby_gt500_race": {
       "frame": {
         "x": 192,
-        "y": 144,
-        "w": 96,
-        "h": 48
+        "y": 192,
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       }
     },
-    "veh_titan-rig_race": {
-      "frame": {
-        "x": 288,
-        "y": 144,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_royal-vinyl_idle": {
+    "veh_porsche_911_gt3_idle": {
       "frame": {
         "x": 384,
-        "y": 144,
-        "w": 96,
-        "h": 48
+        "y": 192,
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       }
     },
-    "veh_royal-vinyl_race": {
-      "frame": {
-        "x": 480,
-        "y": 144,
-        "w": 96,
-        "h": 48
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 96,
-        "h": 48
-      },
-      "sourceSize": {
-        "w": 96,
-        "h": 48
-      }
-    },
-    "veh_atlas-truck-r_idle": {
+    "veh_porsche_911_gt3_race": {
       "frame": {
         "x": 576,
-        "y": 144,
-        "w": 96,
-        "h": 48
+        "y": 192,
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       }
     },
-    "veh_atlas-truck-r_race": {
+    "veh_gtr_r35_nismo_idle": {
       "frame": {
-        "x": 672,
-        "y": 144,
-        "w": 96,
-        "h": 48
+        "x": 768,
+        "y": 192,
+        "w": 192,
+        "h": 96
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
       },
       "sourceSize": {
-        "w": 96,
-        "h": 48
+        "w": 192,
+        "h": 96
+      }
+    },
+    "veh_gtr_r35_nismo_race": {
+      "frame": {
+        "x": 960,
+        "y": 192,
+        "w": 192,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 96
+      }
+    },
+    "veh_f8_tributo_idle": {
+      "frame": {
+        "x": 0,
+        "y": 288,
+        "w": 192,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 96
+      }
+    },
+    "veh_f8_tributo_race": {
+      "frame": {
+        "x": 192,
+        "y": 288,
+        "w": 192,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 96
+      }
+    },
+    "veh_mclaren_720s_idle": {
+      "frame": {
+        "x": 384,
+        "y": 288,
+        "w": 192,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 96
+      }
+    },
+    "veh_mclaren_720s_race": {
+      "frame": {
+        "x": 576,
+        "y": 288,
+        "w": 192,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 96
+      }
+    },
+    "veh_aventador_svj_idle": {
+      "frame": {
+        "x": 768,
+        "y": 288,
+        "w": 192,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 96
+      }
+    },
+    "veh_aventador_svj_race": {
+      "frame": {
+        "x": 960,
+        "y": 288,
+        "w": 192,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 96
       }
     }
-  },
-  "meta": {
-    "app": "fredpixel-atlas-generator",
-    "version": "1.0",
-    "image": "vehicles_atlas.png",
-    "size": {
-      "w": 768,
-      "h": 192
-    },
-    "scale": "1"
   }
 }

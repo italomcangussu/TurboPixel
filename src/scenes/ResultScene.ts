@@ -66,6 +66,9 @@ export class ResultScene extends Phaser.Scene {
 
     setTextSnapshot({
       mode: 'result',
+      trackId: null,
+      phase: null,
+      countdownLights: 0,
       money: gameStore.profile().money,
       result,
     });

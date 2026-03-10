@@ -15,6 +15,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,mp3,ogg,woff2}'],
+        // Exclude source/reference vehicle art from precache to keep build under Workbox limits.
+        globIgnores: ['assets/vehicles/source/**'],
         runtimeCaching: [
           {
             urlPattern: /\.(?:png|jpg|jpeg|svg|webp)$/,

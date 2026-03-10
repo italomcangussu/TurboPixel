@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 import { COSMETIC_MAP } from '../data/cosmetics';
 import type { CarSpec, CosmeticCategory, PlayerProfile } from '../types';
 
+const warnedFrames = new Set<string>();
+
 function getEquippedColor(
   profile: PlayerProfile,
   carId: string,
@@ -19,87 +21,38 @@ function hasFrame(scene: Phaser.Scene, texture: string, frame: string): boolean 
   return scene.textures.exists(texture) && scene.textures.get(texture).has(frame);
 }
 
-function createProceduralFallback(
-  scene: Phaser.Scene,
-  archetype: string,
-  bodyColor: number,
-  spoilerColor: number,
-  kitColor: number,
-  wheelColor: number,
-): Phaser.GameObjects.GameObject[] {
-  let bodyWidth = 150;
-  let bodyHeight = 40;
-  let cabinX = 20;
-  let cabinWidth = 65;
-  let cabinHeight = 22;
-  let wheelBaseRear = 45;
-  let wheelBaseFront = -45;
-  let wheelSizeRear = 8;
-  let wheelSizeFront = 8;
-  let spoilerConfig = { x: 64, y: -20, w: 26, h: 6, enabled: true };
-  let shadowConfig = { w: 155, h: 30, offY: 18 };
-
-  switch (archetype) {
-    case 'dragster':
-      bodyWidth = 220;
-      bodyHeight = 30;
-      cabinX = -50;
-      cabinWidth = 40;
-      cabinHeight = 25;
-      wheelBaseRear = -80;
-      wheelBaseFront = 95;
-      wheelSizeRear = 16;
-      wheelSizeFront = 5;
-      spoilerConfig = { x: -95, y: -25, w: 30, h: 10, enabled: true };
-      shadowConfig = { w: 225, h: 30, offY: 18 };
-      break;
-    case 'retro_compact':
-      bodyWidth = 110;
-      bodyHeight = 50;
-      cabinX = 0;
-      cabinWidth = 70;
-      cabinHeight = 35;
-      wheelBaseRear = 30;
-      wheelBaseFront = -30;
-      wheelSizeRear = 7;
-      wheelSizeFront = 7;
-      spoilerConfig = { x: 0, y: 0, w: 0, h: 0, enabled: false };
-      shadowConfig = { w: 115, h: 30, offY: 18 };
-      break;
-    case 'jdm':
-    case 'sport':
-    default:
-      // Keep standard sleek proportions
-      break;
+function warnMissingFrame(frame: string): void {
+  if (warnedFrames.has(frame)) {
+    return;
   }
+  warnedFrames.add(frame);
+  console.warn(`[carVisual] missing atlas frame: ${frame}`);
+}
 
-  const shadow = scene.add.rectangle(5, shadowConfig.offY, shadowConfig.w, shadowConfig.h, 0x000000, 0.4);
-  const body = scene.add.rectangle(0, 0, bodyWidth, bodyHeight, bodyColor).setStrokeStyle(2, 0x222222, 0.8);
-  const cabin = scene.add.rectangle(cabinX, -(bodyHeight/2 + cabinHeight/2 - 2), cabinWidth, cabinHeight, 0x111625);
-  
-  const glintX = cabinX + cabinWidth/3;
-  const glintY = -(bodyHeight/2 + cabinHeight/2);
-  const windowGlint = scene.add.rectangle(glintX, glintY, 10, 8, 0xffffff, 0.15).setAngle(-20);
-  
-  const objects: Phaser.GameObjects.GameObject[] = [shadow, body, cabin, windowGlint];
-
-  if (spoilerConfig.enabled) {
-    const spoiler = scene.add.rectangle(spoilerConfig.x, spoilerConfig.y, spoilerConfig.w, spoilerConfig.h, spoilerColor);
-    objects.push(spoiler);
-  }
-
-  const kitFront = scene.add.rectangle(-bodyWidth/2 + 3, bodyHeight/2 - 6, 12, 12, kitColor);
-  const kitRear = scene.add.rectangle(bodyWidth/2 - 3, bodyHeight/2 - 6, 12, 12, kitColor);
-  objects.push(kitFront, kitRear);
-  
-  // Render wheels
-  const wheelFrontBg = scene.add.circle(wheelBaseFront, bodyHeight/2 + 4, wheelSizeFront + 4, 0x0a0a0a);
-  const wheelFront = scene.add.circle(wheelBaseFront, bodyHeight/2 + 4, wheelSizeFront, wheelColor);
-  const wheelRearBg = scene.add.circle(wheelBaseRear, bodyHeight/2 + 4, wheelSizeRear + 4, 0x0a0a0a);
-  const wheelRear = scene.add.circle(wheelBaseRear, bodyHeight/2 + 4, wheelSizeRear, wheelColor);
-  objects.push(wheelFrontBg, wheelFront, wheelRearBg, wheelRear);
-
-  return objects;
+function createDebugFallback(scene: Phaser.Scene, car: CarSpec, accentColor: number): Phaser.GameObjects.GameObject[] {
+  const shadow = scene.add.ellipse(0, 20, 132, 24, 0x000000, 0.42);
+  const body = scene.add.rectangle(0, 0, 138, 42, 0xff00ff, 0.95).setStrokeStyle(3, 0x1b1f2a, 1);
+  const cabin = scene.add.rectangle(4, -16, 78, 20, 0x43164a, 0.92).setStrokeStyle(2, 0xffc4ff, 0.5);
+  const accent = scene.add.rectangle(0, 12, 120, 5, accentColor, 0.75);
+  const wheelLeft = scene.add.circle(-40, 20, 12, 0x111111).setStrokeStyle(2, 0xd9dde3, 0.8);
+  const wheelRight = scene.add.circle(42, 20, 12, 0x111111).setStrokeStyle(2, 0xd9dde3, 0.8);
+  const label = scene.add
+    .text(0, -1, 'MISSING', {
+      fontFamily: 'Rajdhani',
+      fontSize: '16px',
+      fontStyle: '700',
+      color: '#101520',
+    })
+    .setOrigin(0.5);
+  const name = scene.add
+    .text(0, 34, car.model.toUpperCase(), {
+      fontFamily: 'Rajdhani',
+      fontSize: '10px',
+      fontStyle: '700',
+      color: '#ffc3ff',
+    })
+    .setOrigin(0.5);
+  return [shadow, accent, body, cabin, wheelLeft, wheelRight, label, name];
 }
 
 export function createCarVisual(
@@ -114,28 +67,35 @@ export function createCarVisual(
   },
 ): Phaser.GameObjects.Container {
   const bodyColor = getEquippedColor(config.profile, config.car.id, 'pintura', config.car.color);
-  const wheelColor = getEquippedColor(config.profile, config.car.id, 'rodas', 0x2f2f2f);
-  const spoilerColor = getEquippedColor(config.profile, config.car.id, 'spoiler', 0x7f8aa3);
-  const kitColor = getEquippedColor(config.profile, config.car.id, 'bodykit', 0x1c1f2a);
-
-  const objects: Phaser.GameObjects.GameObject[] = [];
+  const wheelColor = getEquippedColor(config.profile, config.car.id, 'rodas', 0xb8bec8);
+  const spoilerColor = getEquippedColor(config.profile, config.car.id, 'spoiler', config.car.accentColor);
+  const kitColor = getEquippedColor(config.profile, config.car.id, 'bodykit', config.car.accentColor);
   const frame = `veh_${config.car.spriteKey}_${config.variant ?? 'idle'}`;
+  const objects: Phaser.GameObjects.GameObject[] = [];
 
   if (hasFrame(scene, 'vehiclesAtlas', frame)) {
+    const glowY = config.variant === 'race' ? 28 : 26;
+    const glowWidth = config.variant === 'race' ? 124 : 108;
+    const underGlow = scene.add.ellipse(2, glowY, glowWidth, 10, config.car.accentColor, config.variant === 'race' ? 0.48 : 0.24);
+    const spriteShadow = scene.add.ellipse(0, 30, 138, 22, 0x000000, 0.28);
     const base = scene.add.sprite(0, 0, 'vehiclesAtlas', frame);
-    base.setTint(bodyColor);
-    base.setOrigin(0.5);
-    objects.push(base);
+    base.setOrigin(0.5, 0.5);
+    if (bodyColor !== config.car.color) {
+      base.setTint(bodyColor);
+    }
 
-    // Cosmetic layers to preserve tuning feedback on top of the atlas sprite.
-    const spoiler = scene.add.rectangle(28, -12, 18, 4, spoilerColor, 0.9);
-    const kitFront = scene.add.rectangle(-38, 8, 12, 5, kitColor, 0.9);
-    const kitRear = scene.add.rectangle(38, 8, 12, 5, kitColor, 0.9);
-    const wheelFront = scene.add.circle(-18, 14, 6, wheelColor, 0.95).setStrokeStyle(1, 0x0f0f0f);
-    const wheelRear = scene.add.circle(20, 14, 6, wheelColor, 0.95).setStrokeStyle(1, 0x0f0f0f);
-    objects.push(spoiler, kitFront, kitRear, wheelFront, wheelRear);
+    const headlightGlow = scene.add.ellipse(78, 10, 24, 6, config.car.headlightTint, config.variant === 'race' ? 0.6 : 0.3);
+    const taillightGlow = scene.add.ellipse(-78, 12, 22, 6, config.car.taillightTint, config.variant === 'race' ? 0.56 : 0.3);
+    const splitter = scene.add.rectangle(58, 24, 28, 4, kitColor, 0.75);
+    const diffuser = scene.add.rectangle(-57, 24, 24, 4, kitColor, 0.75);
+    const spoiler = scene.add.rectangle(-52, -12, 18, 4, spoilerColor, 0.72);
+    const wheelLeft = scene.add.circle(-42, 24, 7, wheelColor, 0.86).setStrokeStyle(1, 0x101316, 0.9);
+    const wheelRight = scene.add.circle(42, 24, 7, wheelColor, 0.86).setStrokeStyle(1, 0x101316, 0.9);
+
+    objects.push(spriteShadow, underGlow, headlightGlow, taillightGlow, base, splitter, diffuser, spoiler, wheelLeft, wheelRight);
   } else {
-    objects.push(...createProceduralFallback(scene, config.car.archetype, bodyColor, spoilerColor, kitColor, wheelColor));
+    warnMissingFrame(frame);
+    objects.push(...createDebugFallback(scene, config.car, config.car.accentColor));
   }
 
   const container = scene.add.container(config.x, config.y, objects);

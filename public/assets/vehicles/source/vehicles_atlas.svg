@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1152" height="384" viewBox="0 0 1152 384">
+  <rect width="100%" height="100%" fill="#060a12"/>
+  <image href="../vehicles_atlas.png" x="0" y="0" width="1152" height="384" image-rendering="pixelated"/>
+  <g><rect x="0" y="0" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="6" y="12" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_supra_a80_idle</text>
+<rect x="192" y="0" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="198" y="12" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_supra_a80_race</text>
+<rect x="384" y="0" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="390" y="12" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_rx7_fd_idle</text>
+<rect x="576" y="0" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="582" y="12" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_rx7_fd_race</text>
+<rect x="768" y="0" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="774" y="12" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_nsx_na1_idle</text>
+<rect x="960" y="0" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="966" y="12" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_nsx_na1_race</text>
+<rect x="0" y="96" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="6" y="108" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_skyline_r34_idle</text>
+<rect x="192" y="96" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="198" y="108" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_skyline_r34_race</text>
+<rect x="384" y="96" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="390" y="108" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_challenger_hellcat_idle</text>
+<rect x="576" y="96" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="582" y="108" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_challenger_hellcat_race</text>
+<rect x="768" y="96" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="774" y="108" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_corvette_zr1_c7_idle</text>
+<rect x="960" y="96" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="966" y="108" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_corvette_zr1_c7_race</text>
+<rect x="0" y="192" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="6" y="204" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_shelby_gt500_idle</text>
+<rect x="192" y="192" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="198" y="204" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_shelby_gt500_race</text>
+<rect x="384" y="192" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="390" y="204" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_porsche_911_gt3_idle</text>
+<rect x="576" y="192" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="582" y="204" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_porsche_911_gt3_race</text>
+<rect x="768" y="192" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="774" y="204" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_gtr_r35_nismo_idle</text>
+<rect x="960" y="192" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="966" y="204" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_gtr_r35_nismo_race</text>
+<rect x="0" y="288" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="6" y="300" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_f8_tributo_idle</text>
+<rect x="192" y="288" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="198" y="300" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_f8_tributo_race</text>
+<rect x="384" y="288" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="390" y="300" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_mclaren_720s_idle</text>
+<rect x="576" y="288" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="582" y="300" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_mclaren_720s_race</text>
+<rect x="768" y="288" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="774" y="300" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_aventador_svj_idle</text>
+<rect x="960" y="288" width="192" height="96" fill="none" stroke="#1f2f4a" stroke-opacity="0.25" stroke-width="1"/>
+<text x="966" y="300" fill="#dbe6ff" fill-opacity="0.65" font-family="Rajdhani, monospace" font-size="8">veh_aventador_svj_race</text></g>
+</svg>

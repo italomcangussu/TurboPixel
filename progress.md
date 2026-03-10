@@ -93,3 +93,23 @@ Original prompt: PLEASE IMPLEMENT THIS PLAN: Plano de Criacao do TurboPixel (MVP
   - `npm test` -> 6 arquivos / 16 testes passando.
   - `npm run build` -> build concluido com sucesso.
   - E2E novamente ok: `{\"modes\":[\"menu\",\"garage\",\"menu\",\"upgrades\",\"menu\",\"league\",\"race\",\"result\",\"menu\"],\"endMode\":\"menu\",\"errors\":[]}`.
+
+## 2026-03-10 (visual reboot implementation)
+- Iniciado reboot visual schema v3 com descarte deliberado de saves antigos via `STORAGE_KEY/STORAGE_BACKUP_KEY` v3.
+- `src/types.ts` expandido com metadados de carro/pista e snapshot de corrida mais rico (`trackId`, `phase`, `countdownLights`).
+- `src/data/cars.ts` trocado para lineup curado de 12 esportivos icônicos.
+- `src/data/tracks.ts` convertido para 3 drag strips realistas.
+- `src/core/profile.ts` e `src/core/save.ts` simplificados para o hard reboot sem migração legada.
+- Script reexecutavel criado em `scripts/generate-vehicles-atlas.mjs` para gerar atlas SVG/PNG dos 12 carros (24 frames).
+- `src/ui/carVisual.ts` refeito para usar atlas novo, brilho/luzes por carro e fallback magenta explicito apenas para debug.
+- `src/style.css` atualizado com fontes Teko/Rajdhani e shell mais alinhado ao visual motorsport.
+- `src/ui/button.ts` refinado para a linguagem visual nova.
+- `src/ui/garageBackdrop.ts`, `src/ui/dragStrip.ts` e `src/ui/raceHud.ts` adicionados.
+- `src/scenes/GarageScene.ts` convertido para grid 3x2 em boxes iluminados.
+- `src/scenes/RaceScene.ts` reescrita com drag strip realista, 1/4 de milha, árvore de largada e HUD novo.
+- Build inicial apos o reboot visual: `npm run build` OK.
+
+- Calibracao fisica concluida: tempos de 1/4 de milha por tier validados em `src/tests/race.test.ts` (T1 12.883s, T2 12.200s, T3 11.350s, T4 10.600s, T5 9.933s).
+- Hook de teste adicionado em `window.__turbopixel_game` para navegacao deterministicamente controlada nas validacoes visuais.
+- Validacao Playwright local concluida com capturas em `output/visual-check/` para menu, garagem p1/p2, corrida countdown/ativa e resultado; `console-errors.json` vazio.
+- Cliente da skill `develop-web-game` executado em `output/web-game-skill-check/` sem console errors.
