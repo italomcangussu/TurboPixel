@@ -66,7 +66,7 @@ export class RaceScene extends Phaser.Scene {
     }
 
     const profile = gameStore.profile();
-    const playerUpgrades = profile.upgradesByCar[playerSpec.id] ?? createEmptyUpgrades();
+    const playerUpgrades = gameStore.selectedCarActiveUpgrades();
     const aiUpgrades = createEmptyUpgrades();
     const league = gameStore.getLeague(this.raceConfig.league);
     this.engine = new DragRaceEngine(this.raceConfig, playerSpec, aiSpec, playerUpgrades, aiUpgrades, league);
