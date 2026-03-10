@@ -1,0 +1,20 @@
+; Engine configuration file.
+; Auto-generated baseline for TurboPixel Godot replatform (M1).
+
+config_version=5
+
+[application]
+config/name="TurboPixel 2.5D"
+run/main_scene="res://scenes/app_root.tscn"
+
+[autoload]
+GameStore="*res://infrastructure/game_store.gd"
+
+[display]
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
+[physics]
+common/physics_ticks_per_second=60

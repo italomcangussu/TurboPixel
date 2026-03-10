@@ -1,0 +1,19 @@
+{
+  "name": "TurboPixel",
+  "short_name": "TurboPixel",
+  "description": "Jogo de corrida de arrancada pixel modern com carros customizaveis.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f1220",
+  "theme_color": "#0f1220",
+  "orientation": "landscape",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

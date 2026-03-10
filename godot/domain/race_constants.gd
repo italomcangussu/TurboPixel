@@ -1,0 +1,22 @@
+class_name RaceConstants
+extends RefCounted
+
+const RACE_DISTANCE_METERS: float = 400.0
+const GREEN_LIGHT_AT_MS: float = 3000.0
+const PERFECT_WINDOW_MS: float = 120.0
+const GOOD_WINDOW_MS: float = 300.0
+const SHIFT_DEBOUNCE_MS: float = 120.0
+
+const PERFECT_BUFF_TORQUE_MULTIPLIER: float = 1.10
+const PERFECT_BUFF_DURATION_MS: float = 1000.0
+const MISS_DEBUFF_TORQUE_MULTIPLIER: float = 0.85
+const MISS_DEBUFF_DURATION_MS: float = 1200.0
+const OVERREV_THRESHOLD_RATIO: float = 0.98
+const OVERREV_TRIGGER_MS: float = 500.0
+const OVERREV_DEBUFF_TORQUE_MULTIPLIER: float = 0.92
+const OVERREV_DEBUFF_DURATION_MS: float = 1000.0
+
+const LAUNCH_BONUS_WINDOW_MS: float = 150.0
+const LAUNCH_BONUS_MULTIPLIER: float = 1.06
+const LAUNCH_BONUS_DURATION_MS: float = 800.0
+const FALSE_START_PENALTY_MS: float = 250.0
