@@ -257,7 +257,7 @@ export class RaceScene extends Phaser.Scene {
     pin.fillCircle(x, y, 6);
   }
 
-  private drawTrack(horizonColor: number, roadColor: number, accentColor: number): void {
+  private drawTrack(_horizonColor: number, _roadColor: number, accentColor: number): void {
     const width = this.scale.width;
     const height = this.scale.height;
 
