@@ -21,29 +21,85 @@ function hasFrame(scene: Phaser.Scene, texture: string, frame: string): boolean 
 
 function createProceduralFallback(
   scene: Phaser.Scene,
+  archetype: string,
   bodyColor: number,
   spoilerColor: number,
   kitColor: number,
   wheelColor: number,
 ): Phaser.GameObjects.GameObject[] {
-  // Drop shadow
-  const shadow = scene.add.rectangle(5, 18, 155, 30, 0x000000, 0.4);
-  
-  const body = scene.add.rectangle(0, 0, 150, 40, bodyColor).setStrokeStyle(2, 0x222222, 0.8);
-  const cabin = scene.add.rectangle(20, -18, 65, 22, 0x111625); // Sleeker dark window
-  const windowGlint = scene.add.rectangle(40, -22, 10, 8, 0xffffff, 0.15).setAngle(-20); // Window reflection
-  
-  const spoiler = scene.add.rectangle(64, -20, 26, 6, spoilerColor);
-  const kitFront = scene.add.rectangle(-72, 12, 12, 12, kitColor);
-  const kitRear = scene.add.rectangle(72, 12, 12, 12, kitColor);
-  
-  // Fake internal rim outline
-  const wheelFrontBg = scene.add.circle(-45, 24, 12, 0x0a0a0a);
-  const wheelFront = scene.add.circle(-45, 24, 8, wheelColor);
-  const wheelRearBg = scene.add.circle(45, 24, 12, 0x0a0a0a);
-  const wheelRear = scene.add.circle(45, 24, 8, wheelColor);
+  let bodyWidth = 150;
+  let bodyHeight = 40;
+  let cabinX = 20;
+  let cabinWidth = 65;
+  let cabinHeight = 22;
+  let wheelBaseRear = 45;
+  let wheelBaseFront = -45;
+  let wheelSizeRear = 8;
+  let wheelSizeFront = 8;
+  let spoilerConfig = { x: 64, y: -20, w: 26, h: 6, enabled: true };
+  let shadowConfig = { w: 155, h: 30, offY: 18 };
 
-  return [shadow, body, cabin, windowGlint, spoiler, kitFront, kitRear, wheelFrontBg, wheelFront, wheelRearBg, wheelRear];
+  switch (archetype) {
+    case 'dragster':
+      bodyWidth = 220;
+      bodyHeight = 30;
+      cabinX = -50;
+      cabinWidth = 40;
+      cabinHeight = 25;
+      wheelBaseRear = -80;
+      wheelBaseFront = 95;
+      wheelSizeRear = 16;
+      wheelSizeFront = 5;
+      spoilerConfig = { x: -95, y: -25, w: 30, h: 10, enabled: true };
+      shadowConfig = { w: 225, h: 30, offY: 18 };
+      break;
+    case 'retro_compact':
+      bodyWidth = 110;
+      bodyHeight = 50;
+      cabinX = 0;
+      cabinWidth = 70;
+      cabinHeight = 35;
+      wheelBaseRear = 30;
+      wheelBaseFront = -30;
+      wheelSizeRear = 7;
+      wheelSizeFront = 7;
+      spoilerConfig = { x: 0, y: 0, w: 0, h: 0, enabled: false };
+      shadowConfig = { w: 115, h: 30, offY: 18 };
+      break;
+    case 'jdm':
+    case 'sport':
+    default:
+      // Keep standard sleek proportions
+      break;
+  }
+
+  const shadow = scene.add.rectangle(5, shadowConfig.offY, shadowConfig.w, shadowConfig.h, 0x000000, 0.4);
+  const body = scene.add.rectangle(0, 0, bodyWidth, bodyHeight, bodyColor).setStrokeStyle(2, 0x222222, 0.8);
+  const cabin = scene.add.rectangle(cabinX, -(bodyHeight/2 + cabinHeight/2 - 2), cabinWidth, cabinHeight, 0x111625);
+  
+  const glintX = cabinX + cabinWidth/3;
+  const glintY = -(bodyHeight/2 + cabinHeight/2);
+  const windowGlint = scene.add.rectangle(glintX, glintY, 10, 8, 0xffffff, 0.15).setAngle(-20);
+  
+  const objects: Phaser.GameObjects.GameObject[] = [shadow, body, cabin, windowGlint];
+
+  if (spoilerConfig.enabled) {
+    const spoiler = scene.add.rectangle(spoilerConfig.x, spoilerConfig.y, spoilerConfig.w, spoilerConfig.h, spoilerColor);
+    objects.push(spoiler);
+  }
+
+  const kitFront = scene.add.rectangle(-bodyWidth/2 + 3, bodyHeight/2 - 6, 12, 12, kitColor);
+  const kitRear = scene.add.rectangle(bodyWidth/2 - 3, bodyHeight/2 - 6, 12, 12, kitColor);
+  objects.push(kitFront, kitRear);
+  
+  // Render wheels
+  const wheelFrontBg = scene.add.circle(wheelBaseFront, bodyHeight/2 + 4, wheelSizeFront + 4, 0x0a0a0a);
+  const wheelFront = scene.add.circle(wheelBaseFront, bodyHeight/2 + 4, wheelSizeFront, wheelColor);
+  const wheelRearBg = scene.add.circle(wheelBaseRear, bodyHeight/2 + 4, wheelSizeRear + 4, 0x0a0a0a);
+  const wheelRear = scene.add.circle(wheelBaseRear, bodyHeight/2 + 4, wheelSizeRear, wheelColor);
+  objects.push(wheelFrontBg, wheelFront, wheelRearBg, wheelRear);
+
+  return objects;
 }
 
 export function createCarVisual(
@@ -79,7 +135,7 @@ export function createCarVisual(
     const wheelRear = scene.add.circle(20, 14, 6, wheelColor, 0.95).setStrokeStyle(1, 0x0f0f0f);
     objects.push(spoiler, kitFront, kitRear, wheelFront, wheelRear);
   } else {
-    objects.push(...createProceduralFallback(scene, bodyColor, spoilerColor, kitColor, wheelColor));
+    objects.push(...createProceduralFallback(scene, config.car.archetype, bodyColor, spoilerColor, kitColor, wheelColor));
   }
 
   const container = scene.add.container(config.x, config.y, objects);

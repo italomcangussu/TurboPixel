@@ -5,18 +5,37 @@ import { createDefaultUpgradeEquipped, createEmptyUpgrades } from './upgrades';
 import type { PlayerProfile } from '../types';
 
 const LEGACY_CAR_ID_MAP: Record<string, string> = {
-  'vortex-72': 'bolt-sprint',
-  'falcon-rs': 'neon-comet',
-  'aurora-gt': 'sunset-cruiser',
-  'ember-v12': 'apex-razor',
-  'monarch-x': 'chrome-drifter',
-  'retro-blaze': 'route-66',
-  'nova-r': 'nova-burst',
-  'zenith-s': 'pulse-gtx',
-  'orion-z': 'midnight-heritage',
-  'pulse-rx': 'titan-rig',
-  'specter-gtx': 'royal-vinyl',
-  'hyperion-r': 'atlas-truck-r',
+  // Old v0 -> modern JDM
+  'vortex-72': 'jdm-supra',
+  'falcon-rs': 'eu-f500',
+  'aurora-gt': 'eu-f147',
+  'ember-v12': 'jdm-sky-r34',
+  'monarch-x': 'jdm-rx',
+  'retro-blaze': 'eu-mini',
+  'nova-r': 'jdm-evo',
+  'zenith-s': 'jdm-ns',
+  'orion-z': 'jdm-s2k',
+  'pulse-rx': 'dg-rail',
+  'specter-gtx': 'dg-funny',
+  'hyperion-r': 'dg-outlaw',
+
+  // Old v1 -> modern JDM
+  'bolt-sprint': 'jdm-supra',
+  'neon-comet': 'eu-f500',
+  'sunset-cruiser': 'eu-f147',
+  'apex-razor': 'jdm-sky-r34',
+  'chrome-drifter': 'jdm-rx',
+  'route-66': 'eu-mini',
+  'nova-burst': 'jdm-evo',
+  'pulse-gtx': 'jdm-ns',
+  'midnight-heritage': 'jdm-s2k',
+  'titan-rig': 'dg-rail',
+  'royal-vinyl': 'dg-funny',
+  'atlas-truck-r': 'dg-outlaw',
+  'viper-lane': 'eu-gof1',
+  'iron-hauler': 'dg-supstk',
+  'cargo-brawler': 'dg-jet',
+  'diesel-thunder': 'dg-awb',
 };
 
 function normalizeCarId(carId: string): string | null {

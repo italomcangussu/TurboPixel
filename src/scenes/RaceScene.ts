@@ -83,8 +83,8 @@ export class RaceScene extends Phaser.Scene {
 
     this.playerCarVisual = createCarVisual(this, {
       x: 140,
-      y: this.scale.height * 0.72,
-      scale: 0.66,
+      y: this.scale.height * 0.77,
+      scale: 0.60,
       car: playerSpec,
       profile,
       variant: 'race',
@@ -92,8 +92,8 @@ export class RaceScene extends Phaser.Scene {
 
     this.aiCarVisual = createCarVisual(this, {
       x: 140,
-      y: this.scale.height * 0.48,
-      scale: 0.58,
+      y: this.scale.height * 0.54,
+      scale: 0.52,
       car: aiSpec,
       profile,
       variant: 'race',
@@ -257,67 +257,61 @@ export class RaceScene extends Phaser.Scene {
     pin.fillCircle(x, y, 6);
   }
 
-  private drawTrack(_horizonColor: number, _roadColor: number, accentColor: number): void {
+  private drawTrack(horizonColor: number, roadColor: number, accentColor: number): void {
     const width = this.scale.width;
     const height = this.scale.height;
 
-    // Night Sky
-    this.add.rectangle(width / 2, height * 0.26, width, height * 0.52, 0x050814);
+    // Sky Background
+    this.add.rectangle(width / 2, height * 0.26, width, height * 0.52, horizonColor);
     
-    // Stars
-    for(let i=0; i<50; i++) {
-        this.add.rectangle(
-            Phaser.Math.Between(0, width),
-            Phaser.Math.Between(0, height * 0.4),
-            Phaser.Math.Between(1, 3),
-            Phaser.Math.Between(1, 3),
-            0xffffff,
-            Phaser.Math.FloatBetween(0.2, 0.8)
-        );
-    }
+    // Sun/Cloud setup (instead of Moon/Stars)
+    const skyDeco = this.add.graphics();
+    skyDeco.fillStyle(0xfffdf0, 0.9);
+    skyDeco.fillCircle(width - 120, 80, 45); // Sun
+    skyDeco.fillStyle(0xffffff, 0.6);
+    skyDeco.fillEllipse(200, 100, 180, 40); // Clouds
+    skyDeco.fillEllipse(500, 150, 220, 30);
+    skyDeco.fillEllipse(width - 300, 120, 250, 50);
 
-    // Moon
-    const moon = this.add.graphics();
-    moon.fillStyle(0xfff5d1, 0.9);
-    moon.fillCircle(width - 150, 100, 40);
-    // Moon glow
-    moon.fillStyle(0xfff5d1, 0.1);
-    moon.fillCircle(width - 150, 100, 60);
-
-    // Parallax Cityscape Layers
+    // Parallax Mountain & Forest Layers
     this.cityLayers = [
-       { graphics: this.add.graphics(), speedOffset: 0.1, xPos: 0 },
-       { graphics: this.add.graphics(), speedOffset: 0.3, xPos: 0 },
-       { graphics: this.add.graphics(), speedOffset: 0.6, xPos: 0 }
+       { graphics: this.add.graphics(), speedOffset: 0.05, xPos: 0 }, // Distant mountains
+       { graphics: this.add.graphics(), speedOffset: 0.15, xPos: 0 }, // Mid hills
+       { graphics: this.add.graphics(), speedOffset: 0.4, xPos: 0 }   // Foreground trees
     ];
 
     this.cityLayers.forEach((layer, index) => {
-        const layerColor = [0x1a1c29, 0x222536, 0x2e334a][index];
-        const layerHeightBase = [height * 0.2, height * 0.15, height * 0.1][index];
+        // Adjust color based on depth
+        const mtnColor = [0x507d6a, 0x3d6b47, 0x24542d][index];
+        const layerHeightBase = [height * 0.35, height * 0.25, height * 0.15][index];
         
-        layer.graphics.fillStyle(layerColor, 1);
+        layer.graphics.fillStyle(mtnColor, 1);
         
-        // Draw buildings that will repeat
-        for(let bx = 0; bx < width * 2; bx += Phaser.Math.Between(40, 120)) {
-            const bWidth = Phaser.Math.Between(30, 80);
-            const bHeight = layerHeightBase + Phaser.Math.Between(-30, 80);
-            layer.graphics.fillRect(bx, height * 0.52 - bHeight, bWidth, bHeight);
+        // Draw Mountains/Hills/Trees that will repeat
+        for(let bx = 0; bx < width * 2; bx += Phaser.Math.Between(50, 150)) {
+            const elWidth = Phaser.Math.Between(80, 200);
+            const elHeight = layerHeightBase + Phaser.Math.Between(-40, 50);
             
-            // Add some windows if it's the front layer
-            if (index === 2 && Phaser.Math.Between(0, 1) > 0) {
-              layer.graphics.fillStyle(0xffffaa, 0.4);
-              for(let wy = 10; wy < bHeight - 10; wy += 20) {
-                 if (Phaser.Math.Between(0, 1) > 0) {
-                     layer.graphics.fillRect(bx + 10, height * 0.52 - bHeight + wy, 10, 10);
-                 }
-              }
-              layer.graphics.fillStyle(layerColor, 1); // Reset
+            if (index < 2) {
+                // Draw Mountain Peaks (Triangles)
+                layer.graphics.fillTriangle(
+                    bx, height * 0.54, 
+                    bx + elWidth / 2, height * 0.54 - elHeight, 
+                    bx + elWidth, height * 0.54
+                );
+            } else {
+                // Draw Foreground Trees (Ellipses on trunks)
+                const trunkHeight = 20;
+                layer.graphics.fillStyle(0x362312, 1); // Trunk
+                layer.graphics.fillRect(bx + elWidth/2 - 5, height * 0.54 - trunkHeight, 10, trunkHeight);
+                layer.graphics.fillStyle(mtnColor, 1); // Leaves
+                layer.graphics.fillEllipse(bx + elWidth/2, height * 0.54 - elHeight/2, elWidth * 0.6, elHeight);
             }
         }
     });
 
     // Darker Asphalt Road with gradient illusion
-    this.add.rectangle(width / 2, height * 0.76, width, height * 0.48, 0x111111);
+    this.add.rectangle(width / 2, height * 0.77, width, height * 0.46, roadColor);
     this.add.rectangle(width / 2, height * 0.53, width, height * 0.05, 0x0a0a0a); // Horizon fade
 
     // Guard rails
@@ -544,12 +538,12 @@ export class RaceScene extends Phaser.Scene {
     const maxX = this.scale.width - 110;
 
     this.playerCarVisual.x = minX + (maxX - minX) * playerProgress;
-    this.playerCarVisual.y = this.scale.height * 0.72 - playerProgress * 18;
-    this.playerCarVisual.setScale(0.58 + playerProgress * 0.15);
+    this.playerCarVisual.y = this.scale.height * 0.77 - playerProgress * 18;
+    this.playerCarVisual.setScale(0.6 + playerProgress * 0.15);
 
     this.aiCarVisual.x = minX + (maxX - minX) * aiProgress;
-    this.aiCarVisual.y = this.scale.height * 0.48 - aiProgress * 14;
-    this.aiCarVisual.setScale(0.5 + aiProgress * 0.12);
+    this.aiCarVisual.y = this.scale.height * 0.54 - aiProgress * 14;
+    this.aiCarVisual.setScale(0.52 + aiProgress * 0.12);
 
     const lights = this.engine.getCountdownLights();
     if (lights < 3) {

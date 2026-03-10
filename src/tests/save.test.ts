@@ -20,8 +20,8 @@ describe('save migration', () => {
 
     expect(loaded.profile.schemaVersion).toBe(2);
     expect(loaded.profile.money).toBe(2222);
-    expect(loaded.profile.ownedCars).toContain('neon-comet');
-    expect(loaded.profile.selectedCarId).toBe('neon-comet');
+    expect(loaded.profile.ownedCars).toContain('eu-f500');
+    expect(loaded.profile.selectedCarId).toBe('eu-f500');
     expect(loaded.profile.leagueProgress['1']).toBeDefined();
   });
 
@@ -52,14 +52,14 @@ describe('save migration', () => {
     const loaded = loadProfile();
 
     expect(loaded.profile.schemaVersion).toBe(2);
-    expect(loaded.profile.ownedCars).toContain('bolt-sprint');
-    expect(loaded.profile.selectedCarId).toBe('bolt-sprint');
-    expect(loaded.profile.upgradesByCar['bolt-sprint'].motor).toBe(2);
-    expect(loaded.profile.upgradesByCar['bolt-sprint'].tracao).toBe(0);
-    expect(loaded.profile.equippedUpgradesByCar['bolt-sprint'].motor).toBe(true);
-    expect(loaded.profile.equippedUpgradesByCar['bolt-sprint'].cambio).toBe(true);
-    expect(loaded.profile.equippedUpgradesByCar['bolt-sprint'].turbo).toBe(false);
-    expect(loaded.profile.equippedUpgradesByCar['bolt-sprint'].tracao).toBe(false);
+    expect(loaded.profile.ownedCars).toContain('jdm-supra');
+    expect(loaded.profile.selectedCarId).toBe('jdm-supra');
+    expect(loaded.profile.upgradesByCar['jdm-supra'].motor).toBe(2);
+    expect(loaded.profile.upgradesByCar['jdm-supra'].tracao).toBe(0);
+    expect(loaded.profile.equippedUpgradesByCar['jdm-supra'].motor).toBe(true);
+    expect(loaded.profile.equippedUpgradesByCar['jdm-supra'].cambio).toBe(true);
+    expect(loaded.profile.equippedUpgradesByCar['jdm-supra'].turbo).toBe(false);
+    expect(loaded.profile.equippedUpgradesByCar['jdm-supra'].tracao).toBe(false);
   });
 
   it('normalizes legacy car ids even when schema is already v2', () => {
@@ -110,9 +110,9 @@ describe('save migration', () => {
 
     const loaded = loadProfile();
 
-    expect(loaded.profile.ownedCars).toEqual(expect.arrayContaining(['bolt-sprint', 'titan-rig']));
-    expect(loaded.profile.selectedCarId).toBe('titan-rig');
-    expect(loaded.profile.upgradesByCar['titan-rig'].motor).toBe(1);
-    expect(loaded.profile.equippedUpgradesByCar['titan-rig'].motor).toBe(true);
+    expect(loaded.profile.ownedCars).toEqual(expect.arrayContaining(['jdm-supra', 'dg-rail']));
+    expect(loaded.profile.selectedCarId).toBe('dg-rail');
+    expect(loaded.profile.upgradesByCar['dg-rail'].motor).toBe(1);
+    expect(loaded.profile.equippedUpgradesByCar['dg-rail'].motor).toBe(true);
   });
 });

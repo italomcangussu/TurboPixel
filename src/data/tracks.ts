@@ -2,24 +2,24 @@ import type { TrackSpec } from '../types';
 
 export const TRACKS: TrackSpec[] = [
   {
-    id: 'neon-port',
-    name: 'Neon Port',
-    horizonColor: 0x20143e,
-    roadColor: 0x2b2b3e,
-    accentColor: 0x4ec7ff,
+    id: 'mountain-pass',
+    name: 'Mountain Pass',
+    horizonColor: 0x4a7e93, // Sky blue
+    roadColor: 0x1f1f1f, // Dark Asphalt
+    accentColor: 0x2e8f46, // Forest green accent
   },
   {
-    id: 'sunset-yard',
-    name: 'Sunset Yard',
-    horizonColor: 0x4f2934,
-    roadColor: 0x3e2d28,
-    accentColor: 0xffb347,
+    id: 'forest-dragway',
+    name: 'Forest Strip',
+    horizonColor: 0x224c6e, 
+    roadColor: 0x222222,
+    accentColor: 0x8bac36, // Pine green
   },
   {
-    id: 'steel-valley',
-    name: 'Steel Valley',
-    horizonColor: 0x1b2f3c,
-    roadColor: 0x27323a,
-    accentColor: 0x6de3c4,
+    id: 'valley-route',
+    name: 'Valley Route',
+    horizonColor: 0x1a4563,
+    roadColor: 0x181818,
+    accentColor: 0x429658,
   },
 ];

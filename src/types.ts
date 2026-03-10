@@ -1,4 +1,4 @@
-export type CarEra = 'esportivo' | 'retro' | 'truck';
+export type CarEra = 'esportivo' | 'retro' | 'truck' | '90s' | '00s' | '80s' | '70s' | '60s' | '10s' | 'classic' | 'modern';
 export type CosmeticCategory = 'spoiler' | 'rodas' | 'bodykit' | 'pintura';
 export type CosmeticRarity = 'comum' | 'rara' | 'epica' | 'lendaria';
 export type UpgradeType = 'motor' | 'cambio' | 'turbo' | 'peso' | 'tracao' | 'aerodinamica' | 'embreagem' | 'ecu';
@@ -7,7 +7,7 @@ export interface CarSpec {
   id: string;
   name: string;
   era: CarEra;
-  archetype: 'sport' | 'retro' | 'truck';
+  archetype: 'sport' | 'retro' | 'truck' | 'jdm' | 'retro_compact' | 'dragster';
   tier: number;
   baseTorque: number;
   redlineRpm: number;
