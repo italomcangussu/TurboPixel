@@ -18,7 +18,17 @@ import {
   SHIFT_DEBOUNCE_MS,
 } from './constants';
 import { SeededRng } from './random';
-import { getShiftLagReduction, getShiftWindowBonusMs, getTorqueMultiplier } from './upgrades';
+import {
+  getDragReduction,
+  getFalseStartPenaltyReduction,
+  getLaunchBonusMultiplier,
+  getOverRevToleranceBonusMs,
+  getRedlineMultiplier,
+  getShiftDebounceReductionMs,
+  getShiftLagReduction,
+  getShiftWindowBonusMs,
+  getTorqueMultiplier,
+} from './upgrades';
 import type { CarSpec, LeagueSpec, RaceConfig, UpgradeLevels } from '../types';
 
 export type ShiftQuality = 'perfect' | 'good' | 'miss' | 'ignored';
@@ -45,10 +55,12 @@ export function advanceOverRevAccumulator(params: {
   rpm: number;
   redlineRpm: number;
   deltaMs: number;
+  triggerMs?: number;
 }): { accumMs: number; triggered: boolean } {
+  const triggerMs = params.triggerMs ?? OVERREV_TRIGGER_MS;
   if (params.rpm > params.redlineRpm * OVERREV_THRESHOLD_RATIO) {
     const next = params.accumMs + params.deltaMs;
-    if (next >= OVERREV_TRIGGER_MS) {
+    if (next >= triggerMs) {
       return { accumMs: 0, triggered: true };
     }
     return { accumMs: next, triggered: false };
@@ -112,6 +124,8 @@ export class RaceCar {
 
   private launchBonusMs = 0;
 
+  private launchBonusMultiplier = 1;
+
   constructor(
     private readonly car: CarSpec,
     private readonly upgrades: UpgradeLevels,
@@ -128,6 +142,7 @@ export class RaceCar {
 
     const dt = deltaMs / 1000;
     const gearRatio = this.car.gearRatios[this.gear - 1];
+    const effectiveRedline = this.getEffectiveRedline();
 
     let torqueMultiplier = getTorqueMultiplier(this.upgrades, this.gear);
     if (this.perfectBuffMs > 0) {
@@ -140,18 +155,21 @@ export class RaceCar {
       torqueMultiplier *= OVERREV_DEBUFF_TORQUE_MULTIPLIER;
     }
     if (this.launchBonusMs > 0) {
-      torqueMultiplier *= LAUNCH_BONUS_MULTIPLIER;
+      torqueMultiplier *= this.launchBonusMultiplier;
     }
 
     const shiftLagFactor = this.shiftLagMs > 0 ? 0.55 : 1;
-    const traction = this.car.baseTorque * gearRatio * torqueMultiplier;
-    const acceleration = Math.max(0, (traction / 220) * shiftLagFactor - this.speedMps * 0.015);
+    const traction = this.car.baseTorque * this.car.tractionBias * gearRatio * torqueMultiplier;
+    const baseAcceleration = (traction / Math.max(820, this.car.weightKg * 0.68)) * shiftLagFactor;
+    const aeroFactor = Math.max(0.1, 1 - getDragReduction(this.upgrades));
+    const drag = (this.speedMps * this.speedMps) * this.car.dragCoef * 0.0009 * aeroFactor;
+    const acceleration = Math.max(0, baseAcceleration - drag);
 
     this.speedMps += acceleration * dt;
     this.distanceM += this.speedMps * dt;
 
     this.lastRpm = this.rpm;
-    this.rpm = Math.min(this.car.redlineRpm * 1.08, Math.max(900, 900 + this.speedMps * gearRatio * 42));
+    this.rpm = Math.min(effectiveRedline * 1.08, Math.max(900, 900 + this.speedMps * gearRatio * 42));
     this.rpmRisePerMs = Math.max(0.2, (this.rpm - this.lastRpm) / Math.max(1, deltaMs));
 
     if (this.rpm >= this.getIdealRpm() && this.idealPassedAtMs === null) {
@@ -161,8 +179,9 @@ export class RaceCar {
     const overRevState = advanceOverRevAccumulator({
       accumMs: this.overRevAccumMs,
       rpm: this.rpm,
-      redlineRpm: this.car.redlineRpm,
+      redlineRpm: effectiveRedline,
       deltaMs,
+      triggerMs: OVERREV_TRIGGER_MS + getOverRevToleranceBonusMs(this.upgrades),
     });
     this.overRevAccumMs = overRevState.accumMs;
     if (overRevState.triggered) {
@@ -172,6 +191,7 @@ export class RaceCar {
 
   applyLaunchBonus(): void {
     this.launchBonusMs = LAUNCH_BONUS_DURATION_MS;
+    this.launchBonusMultiplier = LAUNCH_BONUS_MULTIPLIER * getLaunchBonusMultiplier(this.upgrades);
   }
 
   shift(): ShiftOutcome {
@@ -179,7 +199,8 @@ export class RaceCar {
       return { quality: 'ignored', diffMs: 0, gearAfterShift: this.gear };
     }
 
-    if (this.elapsedMs - this.lastShiftAtMs < SHIFT_DEBOUNCE_MS) {
+    const shiftDebounceMs = Math.max(60, SHIFT_DEBOUNCE_MS - getShiftDebounceReductionMs(this.upgrades));
+    if (this.elapsedMs - this.lastShiftAtMs < shiftDebounceMs) {
       return { quality: 'ignored', diffMs: 0, gearAfterShift: this.gear };
     }
 
@@ -221,7 +242,7 @@ export class RaceCar {
   }
 
   getIdealRpm(): number {
-    return this.car.redlineRpm * 0.92;
+    return this.getEffectiveRedline() * 0.92;
   }
 
   getElapsedMs(): number {
@@ -250,6 +271,14 @@ export class RaceCar {
 
   getSpec(): CarSpec {
     return this.car;
+  }
+
+  getFalseStartPenaltyReduction(): number {
+    return getFalseStartPenaltyReduction(this.upgrades);
+  }
+
+  private getEffectiveRedline(): number {
+    return this.car.redlineRpm * getRedlineMultiplier(this.upgrades);
   }
 
   isFinished(): boolean {
@@ -432,7 +461,9 @@ export class DragRaceEngine {
     if (this.elapsedMs < GREEN_LIGHT_AT_MS) {
       this.playerState.launchAtMs = GREEN_LIGHT_AT_MS;
       this.playerState.reactionMs = 0;
-      this.playerState.falseStartPenaltyMs = FALSE_START_PENALTY_MS;
+      const reduction = this.playerCar.getFalseStartPenaltyReduction();
+      const scaledPenalty = FALSE_START_PENALTY_MS * Math.max(0.2, 1 - reduction);
+      this.playerState.falseStartPenaltyMs = Math.round(scaledPenalty);
       return;
     }
 

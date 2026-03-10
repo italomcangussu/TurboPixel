@@ -78,9 +78,9 @@ const game = new Phaser.Game({
     forceSetTimeOut: false,
   },
   render: {
-    pixelArt: true,
-    antialias: false,
-    roundPixels: true,
+    pixelArt: false,
+    antialias: true,
+    roundPixels: false,
   },
   input: {
     activePointers: 2,

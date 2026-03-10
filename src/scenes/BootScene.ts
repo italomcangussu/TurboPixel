@@ -8,6 +8,11 @@ export class BootScene extends Phaser.Scene {
     super('BootScene');
   }
 
+  preload(): void {
+    this.load.atlas('vehiclesAtlas', 'assets/vehicles/vehicles_atlas.png', 'assets/vehicles/vehicles_atlas.json');
+    this.load.atlas('upgradesAtlas', 'assets/upgrades/upgrades_ui_atlas.png', 'assets/upgrades/upgrades_ui_atlas.json');
+  }
+
   create(): void {
     gameStore.mode = 'boot';
     drawAtmosphere(this);

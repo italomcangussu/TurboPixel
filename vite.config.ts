@@ -1,8 +1,15 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import { VitePWA } from 'vite-plugin-pwa';
 import { compression } from 'vite-plugin-compression2';
 
 export default defineConfig({
+  server: {
+    allowedHosts: [
+      'nexaescala-turbopixel.ylgf5w.easypanel.host'
+    ],
+    port: 80,
+    host: '0.0.0.0',
+  },
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
@@ -46,8 +53,7 @@ export default defineConfig({
         ],
       },
     }),
-    compression({ algorithm: 'gzip' }),
-    compression({ algorithm: 'brotliCompress' }),
+    compression({ algorithms: ['gzip', 'brotliCompress'] }),
   ],
 
   build: {
@@ -74,6 +80,7 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['src/tests/**/*.test.ts'],
     coverage: {
+      provider: 'v8',
       enabled: false,
     },
   },

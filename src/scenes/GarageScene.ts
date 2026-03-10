@@ -117,7 +117,7 @@ export class GarageScene extends Phaser.Scene {
       ];
 
       this.add
-        .text(card.x - 90, cardY + 3, statusParts.join(' | '), {
+        .text(card.x - 90, cardY + 3, `${statusParts.join(' | ')} | ${car.weightKg}kg`, {
           fontFamily: 'monospace',
           fontSize: '14px',
           color: '#98b6dc',

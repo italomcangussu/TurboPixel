@@ -65,3 +65,31 @@ Original prompt: PLEASE IMPLEMENT THIS PLAN: Plano de Criacao do TurboPixel (MVP
       - clique no centro de `Corridas` agora navega de `menu` para `league` (state-1/state-2).
       - cantos internos de botoes respondem; pontos externos imediatos permanecem em `menu`.
     - regressao checada com `npm run build` e `npm test` (14 testes passando).
+
+## 2026-03-10 (redesign de veiculos + upgrades v2)
+- Pacote unico implementado no runtime Phaser com:
+  - catalogo expandido para 16 veiculos (6 sport, 5 retro, 5 truck) em `src/data/cars.ts`.
+  - migracao de perfil para `schemaVersion = 2` com `equippedUpgradesByCar`.
+  - sistema de 8 upgrades equipaveis por slot (compra + equipar/desequipar).
+  - preload e uso de atlas de veiculos e upgrades (`public/assets/vehicles/*`, `public/assets/upgrades/*`).
+  - integracao de metadados fisicos por carro (`weightKg`, `dragCoef`, `tractionBias`) na simulacao de corrida.
+- Cenas/UI atualizadas: `MenuScene`, `GarageScene`, `UpgradesScene`, `RaceScene`, `BootScene`.
+- Cobertura de testes ajustada:
+  - `src/tests/save.test.ts` validando migracao v1 -> v2.
+  - `src/tests/economy.test.ts` com novos parametros de economia.
+- Validacao tecnica executada:
+  - `npm test` -> 6 arquivos / 15 testes passando.
+  - `npm run build` -> build concluido com sucesso.
+- Validacao E2E (Playwright):
+  - fluxo completo confirmado: `menu -> garage -> menu -> upgrades -> menu -> league -> race -> result -> menu`.
+  - execucao: `node /Users/italomendescangussu/.codex/skills/develop-web-game/scripts/web_game_playwright_client.js --url http://127.0.0.1:4173 --actions-file /tmp/turbo_e2e_actions.json --iterations 1 --pause-ms 200 --screenshot-dir output/web-game-redesign-run`
+  - checagem complementar por script custom com saida final:
+    - `{\"modes\":[\"menu\",\"garage\",\"menu\",\"upgrades\",\"menu\",\"league\",\"race\",\"result\",\"menu\"],\"endMode\":\"menu\",\"money\":600,\"errors\":[]}`
+- Correcao adicional de compatibilidade de save:
+  - Mapeamento de IDs legados de carros (catalogo antigo de 12 carros) para o novo catalogo de 16 carros em `src/core/profile.ts`.
+  - Garante preservacao real de carros possuidos e selecao de carro ao migrar saves antigos.
+  - Novo teste em `src/tests/save.test.ts`: normalizacao de IDs legados mesmo com `schemaVersion = 2`.
+- Revalidacao final apos o fix:
+  - `npm test` -> 6 arquivos / 16 testes passando.
+  - `npm run build` -> build concluido com sucesso.
+  - E2E novamente ok: `{\"modes\":[\"menu\",\"garage\",\"menu\",\"upgrades\",\"menu\",\"league\",\"race\",\"result\",\"menu\"],\"endMode\":\"menu\",\"errors\":[]}`.

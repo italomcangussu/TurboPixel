@@ -19,13 +19,19 @@ export class RaceScene extends Phaser.Scene {
 
   private timerText!: Phaser.GameObjects.Text;
 
-  private hudText!: Phaser.GameObjects.Text;
+  private rpmNeedle!: Phaser.GameObjects.Rectangle;
+
+  private speedText!: Phaser.GameObjects.Text;
+
+  private gearText!: Phaser.GameObjects.Text;
 
   private shiftText!: Phaser.GameObjects.Text;
 
   private countdownText!: Phaser.GameObjects.Text;
 
   private speedLinesGroup!: Phaser.GameObjects.Group;
+
+  private cityLayers!: { graphics: Phaser.GameObjects.Graphics; speedOffset: number; xPos: number }[];
 
   private pausedByBackground = false;
 
@@ -81,6 +87,7 @@ export class RaceScene extends Phaser.Scene {
       scale: 0.66,
       car: playerSpec,
       profile,
+      variant: 'race',
     });
 
     this.aiCarVisual = createCarVisual(this, {
@@ -89,6 +96,7 @@ export class RaceScene extends Phaser.Scene {
       scale: 0.58,
       car: aiSpec,
       profile,
+      variant: 'race',
     });
 
     this.timerText = this.add
@@ -99,19 +107,16 @@ export class RaceScene extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
-    this.hudText = this.add
-      .text(18, this.scale.height - 130, '', {
-        fontFamily: 'monospace',
-        fontSize: '17px',
-        color: '#ebf5ff',
-      })
-      .setOrigin(0, 0);
+    this.createTachometer();
 
     this.shiftText = this.add
-      .text(this.scale.width / 2, this.scale.height - 125, 'Aguardando launch...', {
-        fontFamily: 'monospace',
-        fontSize: '20px',
-        color: '#ffd28c',
+      .text(this.scale.width / 2, this.scale.height - 180, 'Aguardando launch...', {
+        fontFamily: 'Arial, sans-serif',
+        fontStyle: 'bold italic',
+        fontSize: '28px',
+        color: '#ffaa00',
+        stroke: '#000000',
+        strokeThickness: 4,
       })
       .setOrigin(0.5);
 
@@ -183,41 +188,174 @@ export class RaceScene extends Phaser.Scene {
     this.refreshTextState();
   }
 
+  private createTachometer(): void {
+    const x = 120;
+    const y = this.scale.height - 100;
+    const radius = 80;
+
+    // Draw background
+    const bg = this.add.graphics();
+    bg.fillStyle(0x1a1c29, 0.85);
+    bg.lineStyle(4, 0x3a3f5c, 1);
+    bg.fillCircle(x, y, radius);
+    bg.strokeCircle(x, y, radius);
+
+    // Draw increments (0 to 8 x1000 RPM)
+    for (let i = 0; i <= 8; i++) {
+        const angle = Phaser.Math.DegToRad(180 + i * 22.5); // Semi-circle from 180 to 360 degrees
+        const isRedline = i >= 7;
+        
+        bg.lineStyle(isRedline ? 4 : 2, isRedline ? 0xff4444 : 0x8892b0, 1);
+        const startX = x + Math.cos(angle) * (radius - 15);
+        const startY = y + Math.sin(angle) * (radius - 15);
+        const endX = x + Math.cos(angle) * radius;
+        const endY = y + Math.sin(angle) * radius;
+
+        bg.lineBetween(startX, startY, endX, endY);
+        
+        // Add number labels
+        const textX = x + Math.cos(angle) * (radius - 32);
+        const textY = y + Math.sin(angle) * (radius - 32);
+        this.add.text(textX, textY, i.toString(), {
+            fontFamily: 'Arial, sans-serif',
+            fontStyle: 'bold',
+            fontSize: '18px',
+            color: isRedline ? '#ff4444' : '#ffffff',
+        }).setOrigin(0.5);
+    }
+
+    // Digital Speed Display Center
+    this.speedText = this.add.text(x, y + 10, '0', {
+        fontFamily: 'Arial, sans-serif',
+        fontStyle: 'bold italic',
+        fontSize: '36px',
+        color: '#ffffff',
+    }).setOrigin(0.5, 1);
+
+    this.add.text(x, y + 25, 'km/h', {
+        fontFamily: 'Arial, sans-serif',
+        fontSize: '12px',
+        color: '#8892b0',
+    }).setOrigin(0.5, 1);
+
+    // Gear indicator
+    this.gearText = this.add.text(x, y + 50, 'N', {
+        fontFamily: 'Arial, sans-serif',
+        fontStyle: 'bold',
+        fontSize: '24px',
+        color: '#66ccff',
+    }).setOrigin(0.5, 1);
+
+    // Needle
+    this.rpmNeedle = this.add.rectangle(x, y, radius - 15, 4, 0xff3333);
+    this.rpmNeedle.setOrigin(0, 0.5);
+    this.rpmNeedle.setRotation(Phaser.Math.DegToRad(180));
+    
+    // Add central pin for needle
+    const pin = this.add.graphics();
+    pin.fillStyle(0x3a3f5c, 1);
+    pin.fillCircle(x, y, 6);
+  }
+
   private drawTrack(horizonColor: number, roadColor: number, accentColor: number): void {
     const width = this.scale.width;
     const height = this.scale.height;
 
-    this.add.rectangle(width / 2, height * 0.26, width, height * 0.52, horizonColor);
-    this.add.rectangle(width / 2, height * 0.76, width, height * 0.48, roadColor);
+    // Night Sky
+    this.add.rectangle(width / 2, height * 0.26, width, height * 0.52, 0x050814);
+    
+    // Stars
+    for(let i=0; i<50; i++) {
+        this.add.rectangle(
+            Phaser.Math.Between(0, width),
+            Phaser.Math.Between(0, height * 0.4),
+            Phaser.Math.Between(1, 3),
+            Phaser.Math.Between(1, 3),
+            0xffffff,
+            Phaser.Math.FloatBetween(0.2, 0.8)
+        );
+    }
 
+    // Moon
+    const moon = this.add.graphics();
+    moon.fillStyle(0xfff5d1, 0.9);
+    moon.fillCircle(width - 150, 100, 40);
+    // Moon glow
+    moon.fillStyle(0xfff5d1, 0.1);
+    moon.fillCircle(width - 150, 100, 60);
+
+    // Parallax Cityscape Layers
+    this.cityLayers = [
+       { graphics: this.add.graphics(), speedOffset: 0.1, xPos: 0 },
+       { graphics: this.add.graphics(), speedOffset: 0.3, xPos: 0 },
+       { graphics: this.add.graphics(), speedOffset: 0.6, xPos: 0 }
+    ];
+
+    this.cityLayers.forEach((layer, index) => {
+        const layerColor = [0x1a1c29, 0x222536, 0x2e334a][index];
+        const layerHeightBase = [height * 0.2, height * 0.15, height * 0.1][index];
+        
+        layer.graphics.fillStyle(layerColor, 1);
+        
+        // Draw buildings that will repeat
+        for(let bx = 0; bx < width * 2; bx += Phaser.Math.Between(40, 120)) {
+            const bWidth = Phaser.Math.Between(30, 80);
+            const bHeight = layerHeightBase + Phaser.Math.Between(-30, 80);
+            layer.graphics.fillRect(bx, height * 0.52 - bHeight, bWidth, bHeight);
+            
+            // Add some windows if it's the front layer
+            if (index === 2 && Phaser.Math.Between(0, 1) > 0) {
+              layer.graphics.fillStyle(0xffffaa, 0.4);
+              for(let wy = 10; wy < bHeight - 10; wy += 20) {
+                 if (Phaser.Math.Between(0, 1) > 0) {
+                     layer.graphics.fillRect(bx + 10, height * 0.52 - bHeight + wy, 10, 10);
+                 }
+              }
+              layer.graphics.fillStyle(layerColor, 1); // Reset
+            }
+        }
+    });
+
+    // Darker Asphalt Road with gradient illusion
+    this.add.rectangle(width / 2, height * 0.76, width, height * 0.48, 0x111111);
+    this.add.rectangle(width / 2, height * 0.53, width, height * 0.05, 0x0a0a0a); // Horizon fade
+
+    // Guard rails
     const gfx = this.add.graphics();
-    gfx.fillStyle(accentColor, 0.22);
-    gfx.fillRect(0, height * 0.44, width, 5);
+    gfx.fillStyle(0xcccccc, 1);
+    gfx.fillRect(0, height * 0.54, width, 6);
+    gfx.fillStyle(0xff1111, 1); // Red stripes
+    for(let r = 0; r < width; r+= 40) {
+        gfx.fillRect(r, height * 0.54, 20, 6);
+    }
+    
+    // Bottom rail
+    gfx.fillStyle(0x555555, 1);
     gfx.fillRect(0, height * 0.69, width, 4);
 
+    // Track Markers
     for (let i = 0; i < 18; i += 1) {
       const x = 70 + i * 60;
-      const alpha = i % 2 === 0 ? 0.3 : 0.18;
-      this.add.rectangle(x, height * 0.61, 30, 4, 0xffffff, alpha);
+      this.add.rectangle(x, height * 0.62, 40, 6, 0xdddddd, 0.6);
     }
 
     this.speedLinesGroup = this.add.group();
-    for (let i = 0; i < 30; i += 1) {
-      const lineColor = Phaser.Utils.Array.GetRandom([0xffffff, accentColor]);
+    for (let i = 0; i < 40; i += 1) {
+      const lineColor = Phaser.Utils.Array.GetRandom([0xffffff, accentColor, 0xaaaaaa]);
       const line = this.add.rectangle(
         Phaser.Math.Between(0, width),
-        Phaser.Math.Between(height * 0.76, height),
-        Phaser.Math.Between(20, 100),
-        Phaser.Math.Between(2, 6),
+        Phaser.Math.Between(height * 0.55, height),
+        Phaser.Math.Between(40, 150),
+        Phaser.Math.Between(2, 5),
         lineColor,
       );
-      line.setAlpha(Phaser.Math.FloatBetween(0.1, 0.4));
+      line.setAlpha(Phaser.Math.FloatBetween(0.1, 0.5));
       this.speedLinesGroup.add(line);
     }
 
     this.add
       .text(16, 12, 'Space: launch | Enter: shift', {
-        fontFamily: 'monospace',
+        fontFamily: 'Arial, sans-serif',
         fontSize: '14px',
         color: '#d8e8ff',
       })
@@ -241,12 +379,14 @@ export class RaceScene extends Phaser.Scene {
         this.shiftText.setColor('#ff9f9f').setText('False start! +0.25s de penalidade');
       } else {
         this.shiftText.setColor('#ffd28c').setText('Launch registrado. Prepare o shift!');
+        this.triggerSmokeParticles();
       }
       return;
     }
 
     if (playerState.launchAtMs === null) {
       this.engine.inputLaunch();
+      this.triggerSmokeParticles();
       return;
     }
 
@@ -300,6 +440,32 @@ export class RaceScene extends Phaser.Scene {
 
     this.time.delayedCall(400, () => {
       emitter.destroy();
+    });
+  }
+
+  private triggerSmokeParticles(): void {
+    if (!this.textures.exists('smoke')) {
+      const graphics = this.make.graphics({ x: 0, y: 0 });
+      graphics.fillStyle(0xffffff, 1);
+      graphics.fillCircle(16, 16, 16);
+      graphics.generateTexture('smoke', 32, 32);
+      graphics.destroy();
+    }
+
+    const emitter = this.add.particles(this.playerCarVisual.x - 80, this.playerCarVisual.y + 20, 'smoke', {
+      speedX: { min: -100, max: -300 },
+      speedY: { min: -50, max: 10 },
+      scale: { start: 0.5, end: 2 },
+      alpha: { start: 0.6, end: 0 },
+      lifespan: 1200,
+      tint: 0xddeeff,
+      blendMode: 'NORMAL',
+      frequency: 50,
+    });
+
+    this.time.delayedCall(800, () => {
+        emitter.stop();
+        this.time.delayedCall(1200, () => emitter.destroy());
     });
   }
 
@@ -405,25 +571,38 @@ export class RaceScene extends Phaser.Scene {
     // Update audio
     updateEngineSound(player.getRpm(), this.engine.getPhase() === 'racing');
 
+    // Update Parallax Cityscape
+    this.cityLayers.forEach(layer => {
+        layer.xPos -= currentSpeed * layer.speedOffset;
+        if (layer.xPos <= -this.scale.width) {
+            layer.xPos = 0;
+        }
+        layer.graphics.setX(layer.xPos);
+    });
+
     this.speedLinesGroup.children.iterate((child) => {
       const line = child as Phaser.GameObjects.Rectangle;
       line.x -= currentSpeed * 2.5; // multiplier for visual speed
       if (line.x < -line.width) {
         line.x = this.scale.width + line.width;
-        line.y = Phaser.Math.Between(this.scale.height * 0.76, this.scale.height);
+        line.y = Phaser.Math.Between(this.scale.height * 0.55, this.scale.height);
       }
       return null;
     });
 
     this.timerText.setText(`Tempo: ${(this.engine.getElapsedMs() / 1000).toFixed(2)}s`);
 
-    const playerState = this.engine.getPlayerState();
-    this.hudText.setText(
-      `Marcha: ${player.getGear()} | RPM: ${player.getRpm().toFixed(0)}\n` +
-        `Distancia: ${player.getDistanceM().toFixed(1)}m / 400m\n` +
-        `Velocidade: ${(player.getSpeedMps() * 3.6).toFixed(1)} km/h\n` +
-        `Launch: ${playerState.launchAtMs === null ? 'pendente' : playerState.launched ? 'ativo' : 'agendado'}`,
-    );
+    // Speed update
+    const speedKmh = player.getSpeedMps() * 3.6;
+    this.speedText.setText(speedKmh.toFixed(0));
+    
+    // Gear update
+    this.gearText.setText(player.getGear() === 0 ? 'N' : String(player.getGear()));
+    
+    // Needle update (Assuming 0 RPM = 180 deg, 8000 RPM = 360 deg)
+    const maxRpm = 8000;
+    const rpmRotation = 180 + (Math.min(player.getRpm(), maxRpm) / maxRpm) * 180;
+    this.rpmNeedle.setRotation(Phaser.Math.DegToRad(rpmRotation));
   }
 
   private refreshTextState(): void {

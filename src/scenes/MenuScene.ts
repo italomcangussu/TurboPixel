@@ -17,6 +17,7 @@ export class MenuScene extends Phaser.Scene {
 
     const profile = gameStore.profile();
     const selectedCar = gameStore.selectedCar();
+    const equippedUpgradeCount = Object.values(gameStore.selectedCarUpgradeEquipped()).filter(Boolean).length;
 
     this.add
       .text(this.scale.width / 2, 58, 'TurboPixel', {
@@ -68,6 +69,14 @@ export class MenuScene extends Phaser.Scene {
         fontFamily: 'monospace',
         fontSize: '16px',
         color: '#97b2d2',
+      })
+      .setOrigin(0, 0.5);
+
+    this.add
+      .text(card.x + 40, card.y + 52, `Upgrades equipados: ${equippedUpgradeCount}/8`, {
+        fontFamily: 'monospace',
+        fontSize: '14px',
+        color: '#9bc5a6',
       })
       .setOrigin(0, 0.5);
 

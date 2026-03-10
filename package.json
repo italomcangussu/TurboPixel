@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "lint": "eslint src/",
     "benchmark:godot:web": "node godot/tools/web_frame_benchmark.mjs",
-    "benchmark:godot:web:local": "bash godot/scripts/run_web_frame_benchmark.sh"
+    "benchmark:godot:web:local": "bash godot/scripts/run_web_frame_benchmark.sh",
+    "start": "serve -s dist -l 80"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -29,6 +30,7 @@
     "vitest": "^4.0.18"
   },
   "dependencies": {
+    "serve": "^14.2.4",
     "@supabase/supabase-js": "^2.99.0",
     "howler": "^2.2.4",
     "phaser": "^3.90.0"

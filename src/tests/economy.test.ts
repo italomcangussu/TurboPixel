@@ -3,9 +3,9 @@ import { createDefaultProfile } from '../core/profile';
 
 describe('economy', () => {
   it('calculates money reward for win/loss', () => {
-    expect(calculateMoneyReward(1, 'player', 2)).toBe(160);
-    expect(calculateMoneyReward(5, 'player', 0)).toBe(500);
-    expect(calculateMoneyReward(2, 'ai', 4)).toBe(63);
+    expect(calculateMoneyReward(1, 'player', 2)).toBe(198);
+    expect(calculateMoneyReward(5, 'player', 0)).toBe(580);
+    expect(calculateMoneyReward(2, 'ai', 4)).toBe(88);
   });
 
   it('guarantees loot box after third win without drop', () => {

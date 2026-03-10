@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { UPGRADE_ORDER } from '../core/constants';
 import { getUpgradeCost } from '../core/upgrades';
 import { setTextSnapshot } from '../runtime/textState';
 import { gameStore } from '../state/gameStore';
@@ -7,20 +8,30 @@ import { drawAtmosphere } from '../ui/background';
 import { createCarVisual } from '../ui/carVisual';
 import { createTextButton } from '../ui/button';
 
-const UPGRADE_ORDER: UpgradeType[] = ['motor', 'cambio', 'turbo', 'peso'];
-
 const UPGRADE_DESC: Record<UpgradeType, string> = {
-  motor: '+3% torque por nivel',
-  cambio: '+10ms janela perfect e troca mais rapida',
-  turbo: '+3% aceleracao nas marchas 3-6',
+  motor: '+3% torque/nivel',
+  cambio: '+10ms perfect e troca rapida',
+  turbo: '+3% aceleracao marchas 3-6',
   peso: '+2% aceleracao global',
+  tracao: '+1% launch e reduz false start',
+  aerodinamica: '-2% drag efetivo',
+  embreagem: '-8ms debounce de troca',
+  ecu: '+1.5% redline e tolerancia overrev',
 };
 
-function labelFor(type: UpgradeType): string {
-  if (type === 'motor') return 'Motor';
-  if (type === 'cambio') return 'Cambio';
-  if (type === 'turbo') return 'Turbo';
-  return 'Reducao de Peso';
+const UPGRADE_LABEL: Record<UpgradeType, string> = {
+  motor: 'Motor',
+  cambio: 'Cambio',
+  turbo: 'Turbo',
+  peso: 'Reducao Peso',
+  tracao: 'Tracao',
+  aerodinamica: 'Aero',
+  embreagem: 'Embreagem',
+  ecu: 'ECU',
+};
+
+function frameExists(scene: Phaser.Scene, texture: string, frame: string): boolean {
+  return scene.textures.exists(texture) && scene.textures.get(texture).has(frame);
 }
 
 export class UpgradesScene extends Phaser.Scene {
@@ -36,34 +47,36 @@ export class UpgradesScene extends Phaser.Scene {
 
     const profile = gameStore.profile();
     const car = gameStore.selectedCar();
-    const levels = profile.upgradesByCar[car.id];
+    const levels = gameStore.selectedCarUpgradeLevels();
+    const equipped = gameStore.selectedCarUpgradeEquipped();
 
     this.add
-      .text(this.scale.width / 2, 42, 'Upgrades de Performance', {
+      .text(this.scale.width / 2, 40, 'Upgrades Equipaveis (8 Slots)', {
         fontFamily: 'monospace',
-        fontSize: '34px',
+        fontSize: '32px',
         color: '#f4fff3',
       })
       .setOrigin(0.5);
 
     createCarVisual(this, {
-      x: 190,
-      y: 175,
-      scale: 0.82,
+      x: 160,
+      y: 170,
+      scale: 0.84,
       car,
       profile,
+      variant: 'idle',
     });
 
     this.add
-      .text(190, 235, car.name, {
+      .text(160, 236, `${car.name} | ${car.era}`, {
         fontFamily: 'monospace',
-        fontSize: '18px',
+        fontSize: '15px',
         color: '#dcffe2',
       })
       .setOrigin(0.5);
 
     this.add
-      .text(190, 266, `Dinheiro: ${profile.money}`, {
+      .text(160, 262, `Dinheiro: ${profile.money}`, {
         fontFamily: 'monospace',
         fontSize: '18px',
         color: '#fff3b8',
@@ -71,54 +84,101 @@ export class UpgradesScene extends Phaser.Scene {
       .setOrigin(0.5);
 
     this.feedbackText = this.add
-      .text(this.scale.width / 2 + 150, this.scale.height - 86, '', {
+      .text(this.scale.width / 2, this.scale.height - 86, '', {
         fontFamily: 'monospace',
-        fontSize: '15px',
+        fontSize: '14px',
         color: '#ffdca8',
       })
       .setOrigin(0.5);
 
     UPGRADE_ORDER.forEach((type, index) => {
-      const y = 128 + index * 92;
+      const col = index % 2;
+      const row = Math.floor(index / 2);
+      const cardX = 420 + col * 410;
+      const cardY = 125 + row * 130;
       const level = levels[type];
-      const cost = getUpgradeCost(level);
+      const cost = getUpgradeCost(level, type);
+      const isEquipped = equipped[type];
 
       const card = this.add
-        .rectangle(this.scale.width / 2 + 180, y, 430, 78, 0x213a29, 0.9)
-        .setStrokeStyle(2, 0x8ac89b, 0.75);
+        .rectangle(cardX, cardY, 380, 112, 0x213a29, 0.9)
+        .setStrokeStyle(2, isEquipped ? 0xb8ffbf : 0x8ac89b, 0.8);
+
+      const iconFrame = `upg_${type}_icon`;
+      if (frameExists(this, 'upgradesAtlas', iconFrame)) {
+        this.add.sprite(card.x - 160, card.y - 26, 'upgradesAtlas', iconFrame).setScale(1.1);
+      }
+
+      const tierFrame = `upg_${type}_tier_${Math.max(1, Math.min(5, level || 1))}`;
+      if (level > 0 && frameExists(this, 'upgradesAtlas', tierFrame)) {
+        this.add.sprite(card.x - 122, card.y - 26, 'upgradesAtlas', tierFrame).setScale(1.05);
+      }
 
       this.add
-        .text(card.x - 198, y - 26, `${labelFor(type)} | Nivel ${level}/5`, {
+        .text(card.x - 98, card.y - 44, `${UPGRADE_LABEL[type]} | Nivel ${level}/5`, {
           fontFamily: 'monospace',
-          fontSize: '16px',
+          fontSize: '15px',
           color: '#effff0',
         })
         .setOrigin(0, 0);
 
       this.add
-        .text(card.x - 198, y + 1, UPGRADE_DESC[type], {
+        .text(card.x - 98, card.y - 22, UPGRADE_DESC[type], {
           fontFamily: 'monospace',
-          fontSize: '13px',
+          fontSize: '12px',
           color: '#bdddc7',
         })
         .setOrigin(0, 0);
 
-      const buttonLabel = cost === null ? 'MAX' : `Upgrade (${cost})`;
-      createTextButton(this, {
-        x: card.x + 145,
-        y,
-        width: 140,
-        height: 38,
-        label: buttonLabel,
+      this.add
+        .text(card.x - 98, card.y + 1, `Status: ${isEquipped ? 'Equipado' : 'Guardado'}`, {
+          fontFamily: 'monospace',
+          fontSize: '12px',
+          color: isEquipped ? '#bbffbf' : '#d2dccf',
+        })
+        .setOrigin(0, 0);
+
+      const upgradeBtn = createTextButton(this, {
+        x: card.x + 95,
+        y: card.y + 28,
+        width: 116,
+        height: 30,
+        label: cost === null ? 'MAX' : `Upgrade ${cost}`,
         onClick: () => {
           const upgraded = gameStore.buyUpgrade(type);
           this.feedbackText.setText(
-            upgraded.ok ? `${labelFor(type)} agora no nivel ${upgraded.nextLevel}` : upgraded.reason ?? 'Falha',
+            upgraded.ok
+              ? `${UPGRADE_LABEL[type]} nivel ${upgraded.nextLevel}.`
+              : upgraded.reason ?? 'Falha no upgrade.',
           );
           this.scene.restart();
         },
         fillColor: cost === null ? 0x4d4d4d : 0x2f5f3d,
       });
+      if (cost === null) {
+        upgradeBtn.setActive(false);
+      }
+
+      const equipBtn = createTextButton(this, {
+        x: card.x + 95,
+        y: card.y - 10,
+        width: 116,
+        height: 30,
+        label: isEquipped ? 'Desequipar' : 'Equipar',
+        onClick: () => {
+          const toggled = gameStore.toggleUpgradeEquip(type);
+          this.feedbackText.setText(
+            toggled.ok
+              ? `${UPGRADE_LABEL[type]} ${toggled.equipped ? 'equipado' : 'guardado'}.`
+              : toggled.reason ?? 'Falha ao equipar.',
+          );
+          this.scene.restart();
+        },
+        fillColor: isEquipped ? 0x40653c : 0x364a3b,
+      });
+      if (level <= 0) {
+        equipBtn.setActive(false);
+      }
     });
 
     createTextButton(this, {
